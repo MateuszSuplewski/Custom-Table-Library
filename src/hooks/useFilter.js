@@ -6,12 +6,12 @@ const useFilter = (data) => {
 
   const filterCell = (cell) => cell.toUpperCase().includes(filterPhrase.toUpperCase())
 
-  const filterByPhrase = () => { // use Callback czy cos
-    const fData = data.filter(row => {
+  const filterByPhrase = () => {
+    const dataFilteredByPhrase = data.filter((row) => {
       const rowCellsContent = Object.values(row)
       return rowCellsContent.some(filterCell)
     })
-    setFilteredData(fData)
+    setFilteredData(dataFilteredByPhrase)
   }
 
   useEffect(() => {

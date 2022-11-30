@@ -31,7 +31,7 @@ const useSort = (data) => {
     sortByColumn()
   }, [sorting])
 
-  return [applySorting, sortedData, setSortedData]
+  return [applySorting, sortedData, setSortedData, sorting]
 }
 
 export default useSort
