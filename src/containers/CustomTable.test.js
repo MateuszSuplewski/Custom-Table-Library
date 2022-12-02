@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { tableHeadersTest, tableContentTest } from '../dataToTests'
 import CustomTable from './CustomTable'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 
 const setup = (limit = 3) => {
   return render(
@@ -61,11 +62,103 @@ describe('Table Initial render', () => {
   })
 
   it('Should render pagination', () => {
+    setup()
+    expect.assertions(2)
+
+    expect(screen.getByTestId('pageIcon--next')).toBeInTheDocument()
+    expect(screen.getByTestId('pageIcon--prev')).toBeInTheDocument()
+  })
+})
+
+describe('Table Actions', () => {
+  it('Should filter data if input passed', () => {
+    setup()
+    expect.assertions(5)
+
+    const globalFilter = screen.getByPlaceholderText('Search')
+    userEvent.type(globalFilter, 'Chin')
+    expect(globalFilter).toHaveValue('Chin')
+
+    expect(screen.getByText('China')).toBeInTheDocument()
+    expect(screen.getByText('1403500365')).toBeInTheDocument()
+
+    expect(screen.queryByText('India')).not.toBeInTheDocument()
+    expect(screen.queryByText('1324171354')).not.toBeInTheDocument()
+  })
+
+  it('Should render initial data & clear input if clear input data button clicked', async () => {
+    setup()
+    expect.assertions(7)
+
+    const globalFilter = screen.getByPlaceholderText('Search')
+    userEvent.type(globalFilter, 'Chin')
+
+    const clearButton = screen.getByTestId('filterIcon--clear')
+    userEvent.click(clearButton)
+    expect(globalFilter).toHaveValue('')
+
+    await waitFor(() => {
+      tableContentTest.forEach((row) => {
+        const rowCellsContent = Object.values(row)
+        rowCellsContent.forEach(cell => expect(screen.getByText(cell)).toBeInTheDocument())
+      })
+    })
+  })
+
+  it('Should render informing text if no data found by filter', async () => {
+    setup()
+    expect.assertions(1)
+
+    const globalFilter = screen.getByPlaceholderText('Search')
+    userEvent.type(globalFilter, 'Chinaaa')
+    expect(screen.getByText('No matching data found')).toBeInTheDocument()
+  })
+
+  it('Should sort data ASC if sorter clicked', async () => {
+    setup()
+    const sortButtons = screen.getAllByTestId('sortIcon--asc')
+    userEvent.click(sortButtons[1])
+
+    const dataContainer = document.querySelector('tbody')
+    const firstRow = dataContainer.querySelector('tr')
+    await waitFor(() => {
+      expect(firstRow.children[0].textContent).toBe('Italy')
+      expect(firstRow.children[1].textContent).toBe('60483973')
+    })
+  })
+
+  it('Should sort data DSC if sorter clicked twice', async () => {
+    setup()
+
+    expect.assertions(2)
+    const sortButtons = screen.getAllByTestId('sortIcon--asc')
+    userEvent.click(sortButtons[1])
+    userEvent.click(sortButtons[1])
+    const sortButton = screen.getByTestId('sortIcon--dsc')
+    userEvent.click(sortButton)
+
+    const dataContainer = document.querySelector('tbody')
+    const firstRow = dataContainer.querySelector('tr')
+    await waitFor(() => {
+      expect(firstRow.children[0].textContent).toBe('China')
+      expect(firstRow.children[1].textContent).toBe('1403500365')
+    })
+  })
+
+  it('Should change page if other page selected', () => {
     setup(1)
     expect.assertions(4)
 
-    const pages = screen.getAllByTestId('pageNumber')
-    expect(pages).toHaveLength(3)
-    pages.forEach((page) => expect(page).toBeInTheDocument())
+    const nextPage = screen.getByTestId('pageIcon--next')
+    userEvent.click(nextPage)
+
+    const dataContainer = document.querySelector('tbody')
+    const firstRow = dataContainer.querySelector('tr')
+
+    expect(firstRow.children[0].textContent).toBe('China')
+    expect(firstRow.children[1].textContent).toBe('1403500365')
+
+    expect(screen.queryByText('India')).not.toBeInTheDocument()
+    expect(screen.queryByText('1324171354')).not.toBeInTheDocument()
   })
 })
