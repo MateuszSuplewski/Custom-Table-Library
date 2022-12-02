@@ -8,7 +8,7 @@ const App = () => {
       title={'Basic example of table'}
       columns={tableHeaders}
       data={tableContent}
-      limit={5}
+      limit={2}
     />
   )
 }

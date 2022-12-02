@@ -2,33 +2,38 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
+import ClickableIcon from '../styled/ClickableIcon'
+import FilterWrapper from '../styled/FilterWrapper'
 
-const GlobalFilter = ({ setFilterPhrase, filterPhrase }) => {
+const GlobalFilter = ({ handleFilterChange, filterPhrase }) => {
   return (
-    <>
+    <FilterWrapper>
       <FontAwesomeIcon
         icon={faMagnifyingGlass}
         data-testid={'filterIcon--search'}
       />
       <input
         type={'text'}
-        onChange={(e) => setFilterPhrase(e.target.value)}
+        onChange={(e) => handleFilterChange(e)}
         value={filterPhrase}
         placeholder={'Search'}
+        style={{ border: 'none', outline: 'none' }}
       />
-      <FontAwesomeIcon
-        icon={faSquareXmark}
-        size={'xl'}
-        onClick={() => setFilterPhrase('')}
+      <ClickableIcon
         data-testid={'filterIcon--clear'}
+        icon={faSquareXmark}
+        onClick={(e) => handleFilterChange(e, true)}
+        size={'1.25rem'}
+        isActive={filterPhrase}
+        isDisabled={!filterPhrase}
       />
-    </>
+    </FilterWrapper>
   )
 }
 
 GlobalFilter.propTypes = {
   filterPhrase: PropTypes.string,
-  setFilterPhrase: PropTypes.func
+  handleFilterChange: PropTypes.func
 }
 
 export default GlobalFilter

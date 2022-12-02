@@ -1,24 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-const useFilter = (data) => {
+const useFilter = (initialData) => {
   const [filterPhrase, setFilterPhrase] = useState('')
-  const [filteredData, setFilteredData] = useState(data)
+  // const [filteredData, setFilteredData] = useState(initialData)
 
   const filterCell = (cell) => cell.toUpperCase().includes(filterPhrase.toUpperCase())
 
-  const filterByPhrase = () => {
+  const filterByPhrase = (data = initialData) => {
     const dataFilteredByPhrase = data.filter((row) => {
       const rowCellsContent = Object.values(row)
       return rowCellsContent.some(filterCell)
     })
-    setFilteredData(dataFilteredByPhrase)
+    // setFilteredData(dataFilteredByPhrase) // chyba do wyjebania tez
+    return dataFilteredByPhrase
   }
 
-  useEffect(() => {
-    filterByPhrase()
-  }, [filterPhrase])
+  // useEffect(() => {
+  //   filterByPhrase()
+  // }, [filterPhrase])
 
-  return [filteredData, filterPhrase, setFilterPhrase]
+  return [filterPhrase, setFilterPhrase, filterByPhrase]
 }
 
 export default useFilter
