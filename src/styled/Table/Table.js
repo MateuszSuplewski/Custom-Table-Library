@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { STable, STitle } from './Table.styled'
+import STable from './Table.styled'
 
-const Table = ({ style, styleTitle, title, children }) => {
+const Table = ({ style, children }) => {
   return (
     <STable
       style={style}
     >
-      <STitle style={styleTitle}>{title}</STitle>
       {children}
     </STable>
   )
@@ -15,9 +14,7 @@ const Table = ({ style, styleTitle, title, children }) => {
 
 Table.propTypes = {
   style: PropTypes.object,
-  styleTitle: PropTypes.object,
-  children: PropTypes.node,
-  title: PropTypes.string
+  children: PropTypes.node
 }
 
 export default Table
