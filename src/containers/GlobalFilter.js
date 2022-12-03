@@ -1,15 +1,15 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquareXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { globalFilterContext } from '../mainContext'
-import ClickableIcon from '../styled/ClickableIcon'
-import FilterWrapper from '../styled/FilterWrapper'
-import Input from '../styled/Input/Input'
+import { globalFilterContext } from '../context/mainContexts'
+import ClickableIcon from '../styled/singleElements/ClickableIcon'
+import FilterWrapper from '../styled/wrappers/FilterWrapper'
+import Input from '../styled/singleElements/Input/Input'
 
 const GlobalFilter = () => {
   const { handleGlobalFilterChange, filterPhrase } = React.useContext(globalFilterContext)
   return (
-    <FilterWrapper>
+    <FilterWrapper style={{ minWidth: 'auto' }}>
       <FontAwesomeIcon
         icon={faMagnifyingGlass}
         data-testid={'filterIcon--search'}

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { paginationContext } from '../mainContext'
-import TableCell from '../styled/TableCell'
-import TableRow from '../styled/TableRow'
+import { paginationContext } from '../context/mainContexts'
+import TableCell from '../styled/tableItems/TableCell'
+import TableRow from '../styled/tableItems/TableRow'
 
 const TableBodyPage = ({ data }) => {
   const { begin, end } = React.useContext(paginationContext)

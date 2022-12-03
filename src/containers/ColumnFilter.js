@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGenderless } from '@fortawesome/free-solid-svg-icons'
-import { columnFilterContext } from '../mainContext'
-import FilterWrapper from '../styled/FilterWrapper'
-import Input from '../styled/Input/Input'
-import TableCell from '../styled/TableCell'
-import TableRow from '../styled/TableRow'
+import { columnFilterContext } from '../context/mainContexts'
+import FilterWrapper from '../styled/wrappers/FilterWrapper'
+import Input from '../styled/singleElements/Input/Input'
+import TableCell from '../styled/tableItems/TableCell'
+import TableRow from '../styled/tableItems/TableRow'
 
 const ColumnFilter = ({ columns }) => {
   const { handleColFilterChange, colFilterPhrases } = React.useContext(columnFilterContext)

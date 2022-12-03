@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import { paginationContext } from '../mainContext'
-import Select from '../styled/Select'
-import PaginationWrapper from '../styled/PaginationWrapper'
-import ClickableIcon from '../styled/ClickableIcon'
+import { paginationContext } from '../context/mainContexts'
+import Select from '../styled/singleElements/Select'
+import PaginationWrapper from '../styled/wrappers/PaginationWrapper'
+import ClickableIcon from '../styled/singleElements/ClickableIcon'
 
 const Pagination = ({ dataLength, options }) => {
   const { begin, end, limit, setLimit, page, setPage } = React.useContext(paginationContext)

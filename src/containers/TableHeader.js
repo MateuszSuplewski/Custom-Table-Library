@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { sortContext } from '../mainContext'
+import { sortContext } from '../context/mainContexts'
 import Sorter from './Sorter'
-import TableHead from '../styled/TableHead'
-import TableRow from '../styled/TableRow'
-import TableCell from '../styled/TableCell'
+import TableHead from '../styled/tableItems/TableHead'
+import TableRow from '../styled/tableItems/TableRow'
+import TableCell from '../styled/tableItems/TableCell'
 
 const TableHeader = ({ columns }) => {
   const { sorting, handleSortChange } = React.useContext(sortContext)

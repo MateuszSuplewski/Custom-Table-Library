@@ -1,13 +1,13 @@
 import React from 'react'
 import CustomTable from './containers/CustomTable'
-import { tableHeaders, tableContent } from './tableData'
+import { columns, data } from './data/tableData'
 
 const App = () => {
   return (
     <CustomTable
       title={'Basic example of table'}
-      columns={tableHeaders}
-      data={tableContent}
+      columns={columns}
+      data={data}
       limit={2}
     />
   )

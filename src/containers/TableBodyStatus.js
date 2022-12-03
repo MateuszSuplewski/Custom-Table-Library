@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import TableRow from '../styled/TableRow'
-import TableCell from '../styled/TableCell'
+import TableRow from '../styled/tableItems/TableRow'
+import TableCell from '../styled/tableItems/TableCell'
 
 const TableBodyStatus = ({ content, maxLength }) => {
   return (

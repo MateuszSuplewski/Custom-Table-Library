@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import ClickableIcon from '../styled/ClickableIcon'
+import ClickableIcon from '../styled/singleElements/ClickableIcon'
 
 const Sorter = ({ isActiveSort, order }) => {
   return (

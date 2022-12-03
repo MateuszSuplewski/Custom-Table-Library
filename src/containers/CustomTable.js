@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { paginationContext, globalFilterContext, columnFilterContext, sortContext } from '../mainContext'
+import { paginationContext, globalFilterContext, columnFilterContext, sortContext } from '../context/mainContexts'
 import useColumnsFilter from '../hooks/useColumnsFilter'
 import useGlobalFilter from '../hooks/useGlobalFilter'
 import useSort from '../hooks/useSort'
@@ -11,11 +11,11 @@ import GlobalFilter from './GlobalFilter'
 import ColumnFilter from './ColumnFilter'
 import TableHeader from './TableHeader'
 import TableBodyStatus from './TableBodyStatus'
-import Title from '../styled/Title'
-import TableWrapper from '../styled/TableWrapper'
-import HeaderWrapper from '../styled/HeaderWrapper.js'
-import Table from '../styled/Table'
-import TableBody from '../styled/TableBody'
+import Title from '../styled/singleElements/Title'
+import TableWrapper from '../styled/wrappers/TableWrapper'
+import HeaderWrapper from '../styled/wrappers/HeaderWrapper'
+import Table from '../styled/tableItems/Table'
+import TableBody from '../styled/tableItems/TableBody'
 
 export const CustomTable = ({ title, columns, data, initialLimit = 3, filtering = 'both', options = [1, 2, 3, 5] }) => {
   const [applySorting, sorting, sortByColumn] = useSort(data)
