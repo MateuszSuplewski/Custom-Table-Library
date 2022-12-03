@@ -9,7 +9,9 @@ const DefaultSFilterWrapper = styled.div`
  border-bottom: 2px solid black;
  width: 225px;
  justify-content: space-between;
- margin: 0.5rem;
+ margin: 0 0.5rem;
+ max-width: 225px;
+ min-width: 100px;
 `
 
 const SFilterWrapper = styled(DefaultSFilterWrapper)(({ style }) => style)

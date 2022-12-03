@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 const useSort = (initialData) => {
-  // const [sortedData, setSortedData] = useState(initialData)
   const [sorting, setSorting] = useState({ field: null, order: null, type: null })
 
   const applySorting = (field, type) => {
@@ -14,6 +13,7 @@ const useSort = (initialData) => {
     if (!field) return data
 
     const sortByNumber = (a, b) => Number(a[field]) - Number(b[field])
+
     const sortByText = (a, b) => {
       const fieldA = a[field].toUpperCase()
       const fieldB = b[field].toUpperCase()
@@ -24,13 +24,9 @@ const useSort = (initialData) => {
 
     const preparedData = type === 'numeric' ? [...data].sort(sortByNumber) : [...data].sort(sortByText)
     const sortedDataByOrder = order === 'ASC' ? preparedData : preparedData.reverse()
-    // setSortedData(sortedDataByOrder) // chybva do wyjebania
+
     return sortedDataByOrder
   }
-
-  // useEffect(() => {
-  //   sortByColumn()
-  // }, [sorting])
 
   return [applySorting, sorting, sortByColumn]
 }

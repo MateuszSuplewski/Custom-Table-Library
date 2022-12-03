@@ -1,31 +1,21 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
+import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import ClickableIcon from '../styled/ClickableIcon'
 
-const Sorter = ({ isChosenSort, order }) => {
+const Sorter = ({ isActiveSort, order }) => {
   return (
-    isChosenSort
-      ? order === 'DESC'
-        ? <FontAwesomeIcon
-            data-testid={'sortIcon--dsc'}
-            icon={faSortDown}
-          />
-        : <FontAwesomeIcon
-            data-testid={'sortIcon--asc'}
-            icon={faSortUp}
-          />
-      : <FontAwesomeIcon
-          data-testid={'sortIcon--asc'}
-          icon={faSortUp}
-          opacity={0.2}
-        />
+    <ClickableIcon
+      data-testid={order === 'DESC' ? 'sortIcon--dsc' : 'sortIcon--asc'}
+      icon={order === 'DESC' && isActiveSort ? faSortDown : faSortUp}
+      isActive={isActiveSort}
+    />
   )
 }
 
 Sorter.propTypes = {
   order: PropTypes.string,
-  isChosenSort: PropTypes.bool
+  isActiveSort: PropTypes.bool.isRequired
 }
 
 export default Sorter

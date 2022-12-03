@@ -10,7 +10,7 @@ const setup = (limit = 3) => {
       title={'Basic example of table'}
       columns={tableHeadersTest}
       data={tableContentTest}
-      limit = {limit}
+      initialLimit = {limit}
     />
   )
 }
@@ -120,28 +120,25 @@ describe('Table Actions', () => {
     userEvent.click(sortButtons[1])
 
     const dataContainer = document.querySelector('tbody')
-    const firstRow = dataContainer.querySelector('tr')
+    const rows = dataContainer.querySelectorAll('tr')
     await waitFor(() => {
-      expect(firstRow.children[0].textContent).toBe('Italy')
-      expect(firstRow.children[1].textContent).toBe('60483973')
+      expect(rows[1].children[0].textContent).toBe('Italy')
+      expect(rows[1].children[1].textContent).toBe('60483973')
     })
   })
 
   it('Should sort data DSC if sorter clicked twice', async () => {
     setup()
 
-    expect.assertions(2)
     const sortButtons = screen.getAllByTestId('sortIcon--asc')
     userEvent.click(sortButtons[1])
     userEvent.click(sortButtons[1])
-    const sortButton = screen.getByTestId('sortIcon--dsc')
-    userEvent.click(sortButton)
 
     const dataContainer = document.querySelector('tbody')
-    const firstRow = dataContainer.querySelector('tr')
+    const rows = dataContainer.querySelectorAll('tr')
     await waitFor(() => {
-      expect(firstRow.children[0].textContent).toBe('China')
-      expect(firstRow.children[1].textContent).toBe('1403500365')
+      expect(rows[1].children[0].textContent).toBe('China')
+      expect(rows[1].children[1].textContent).toBe('1403500365')
     })
   })
 
@@ -153,10 +150,10 @@ describe('Table Actions', () => {
     userEvent.click(nextPage)
 
     const dataContainer = document.querySelector('tbody')
-    const firstRow = dataContainer.querySelector('tr')
+    const rows = dataContainer.querySelectorAll('tr')
 
-    expect(firstRow.children[0].textContent).toBe('China')
-    expect(firstRow.children[1].textContent).toBe('1403500365')
+    expect(rows[1].children[0].textContent).toBe('China')
+    expect(rows[1].children[1].textContent).toBe('1403500365')
 
     expect(screen.queryByText('India')).not.toBeInTheDocument()
     expect(screen.queryByText('1324171354')).not.toBeInTheDocument()

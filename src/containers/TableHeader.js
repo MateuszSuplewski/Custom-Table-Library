@@ -1,24 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { sortContext } from '../mainContext'
+import Sorter from './Sorter'
 import TableHead from '../styled/TableHead'
 import TableRow from '../styled/TableRow'
 import TableCell from '../styled/TableCell'
-import Sorter from './Sorter'
 
-const TableHeader = ({ data }) => {
+const TableHeader = ({ columns }) => {
+  const { sorting, handleSortChange } = React.useContext(sortContext)
   return (
     <TableHead>
       <TableRow>
-        {data.map(({ title, field, type }, index) => (
+        {columns.map(({ title, field, type }, index) => (
           <TableCell
-            onClick={() => applySorting(field, type)}
+            onClick={() => handleSortChange(field, type)}
             key={index}
             type={'head'}
             align={'left'}
           >
             {title}
             <Sorter
-              isChosenSort = {sorting.field === field}
+              isActiveSort = {sorting.field === field}
               order={sorting.order}
             />
           </TableCell>
@@ -29,7 +31,7 @@ const TableHeader = ({ data }) => {
 }
 
 TableHeader.propTypes = {
-  data: PropTypes.array
+  columns: PropTypes.array.isRequired
 }
 
 export default TableHeader

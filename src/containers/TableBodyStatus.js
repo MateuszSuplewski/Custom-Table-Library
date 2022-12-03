@@ -9,15 +9,16 @@ const TableBodyStatus = ({ content, maxLength }) => {
       <TableCell
         colSpan={maxLength}
         align={'center'}
-      >{content}
+      >
+        {content}
       </TableCell>
     </TableRow>
   )
 }
 
 TableBodyStatus.propTypes = {
-  content: PropTypes.string,
-  maxLength: PropTypes.number
+  content: PropTypes.string.isRequired,
+  maxLength: PropTypes.number.isRequired
 }
 
 export default TableBodyStatus
