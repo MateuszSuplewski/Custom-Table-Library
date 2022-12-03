@@ -7,13 +7,8 @@ import PaginationWrapper from '../styled/wrappers/PaginationWrapper'
 import ClickableIcon from '../styled/singleElements/ClickableIcon'
 
 const Pagination = ({ dataLength, options }) => {
-  const { begin, end, limit, setLimit, page, setPage } = React.useContext(paginationContext)
+  const { begin, end, limit, handleRowsPerPageChange, page, setPage } = React.useContext(paginationContext)
   const pages = Math.ceil(dataLength / limit)
-
-  const handleRowsPerPageChange = (e) => {
-    setLimit(e.target.value)
-    setPage(1)
-  }
 
   return (
     <PaginationWrapper>

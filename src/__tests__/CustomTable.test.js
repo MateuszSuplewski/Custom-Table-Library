@@ -1,16 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { columns, data } from '../data/testData'
-import CustomTable from '../containers/CustomTable'
+import CustomTable from '../containers/CustomTableContainer'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 
-const setup = (limit = 3) => {
+const setup = (limit = 3, filtering = 'bothFilters') => {
   return render(
     <CustomTable
       title={'Basic example of table'}
       columns={columns}
       data={data}
-      initialLimit = {limit}
+      initialLimit={limit}
+      filtering={filtering}
     />
   )
 }
@@ -49,18 +50,6 @@ describe('Table Initial render', () => {
     sortButtons.forEach(button => expect(button).toBeInTheDocument())
   })
 
-  it('Should render global filter', () => {
-    setup()
-    expect.assertions(4)
-
-    const globalFilter = screen.getByPlaceholderText('Search')
-    expect(globalFilter).toBeInTheDocument()
-    expect(globalFilter).toHaveValue('')
-
-    expect(screen.getByTestId('filterIcon--search')).toBeInTheDocument()
-    expect(screen.getByTestId('filterIcon--clear')).toBeInTheDocument()
-  })
-
   it('Should render pagination', () => {
     setup()
     expect.assertions(2)
@@ -68,10 +57,49 @@ describe('Table Initial render', () => {
     expect(screen.getByTestId('pageIcon--next')).toBeInTheDocument()
     expect(screen.getByTestId('pageIcon--prev')).toBeInTheDocument()
   })
+
+  it('Should render both filters when selected filtering is bothFilters', () => {
+    setup(3, 'bothFilters')
+    expect.assertions(10)
+
+    const globalFilter = screen.getByPlaceholderText('Search')
+    const colFilterInputs = screen.getAllByPlaceholderText(/Filter by.{2,}/)
+
+    expect(globalFilter).toBeInTheDocument()
+    expect(globalFilter).toHaveValue('')
+    colFilterInputs.forEach(colFilterInput => {
+      expect(colFilterInput).toBeInTheDocument()
+      expect(colFilterInput).toHaveValue('')
+    })
+
+    const colFilterIcons = screen.getAllByTestId('filterIcon--column')
+
+    colFilterIcons.forEach(colFilterIcon => expect(colFilterIcon).toBeInTheDocument())
+    expect(screen.getByTestId('filterIcon--search')).toBeInTheDocument()
+    expect(screen.getByTestId('filterIcon--clear')).toBeInTheDocument()
+  })
+
+  it('Should render only global filter when selected filtering is globalFilter ', () => {
+    setup(3, 'globalFilter')
+    expect.assertions(3)
+
+    expect(screen.getByPlaceholderText('Search')).toBeInTheDocument()
+    expect(screen.queryByPlaceholderText('Filter by name')).not.toBeInTheDocument()
+    expect(screen.queryByPlaceholderText('Filter by population')).not.toBeInTheDocument()
+  })
+
+  it('Should render only columns filter when selected filtering is columnFilter ', () => {
+    setup(3, 'columnFilter')
+    expect.assertions(3)
+
+    const colFilterInputs = screen.getAllByPlaceholderText(/Filter by.{2,}/)
+    colFilterInputs.forEach(colFilterInput => expect(colFilterInput).toBeInTheDocument())
+    expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument()
+  })
 })
 
 describe('Table Actions', () => {
-  it('Should filter data if input passed', () => {
+  it('Should filter data if globalFilter input passed', () => {
     setup()
     expect.assertions(5)
 
@@ -86,7 +114,22 @@ describe('Table Actions', () => {
     expect(screen.queryByText('1324171354')).not.toBeInTheDocument()
   })
 
-  it('Should render initial data & clear input if clear input data button clicked', async () => {
+  it('Should filter data if columnFilter input passed', () => {
+    setup()
+    expect.assertions(5)
+
+    const columnFilter = screen.getByPlaceholderText('Filter by population')
+    userEvent.type(columnFilter, '60483973')
+    expect(columnFilter).toHaveValue('60483973')
+
+    expect(screen.getByText('Italy')).toBeInTheDocument()
+    expect(screen.getByText('60483973')).toBeInTheDocument()
+
+    expect(screen.queryByText('India')).not.toBeInTheDocument()
+    expect(screen.queryByText('1324171354')).not.toBeInTheDocument()
+  })
+
+  it('Should render initial data & clear input if globalFilter clear input data button clicked', async () => {
     setup()
     expect.assertions(7)
 

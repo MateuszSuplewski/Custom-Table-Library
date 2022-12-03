@@ -1,23 +1,12 @@
-
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { paginationContext, globalFilterContext, columnFilterContext, sortContext } from '../context/mainContexts'
 import useColumnsFilter from '../hooks/useColumnsFilter'
 import useGlobalFilter from '../hooks/useGlobalFilter'
 import useSort from '../hooks/useSort'
-import TableBodyPage from './TableBodyPage'
-import Pagination from './Pagination'
-import GlobalFilter from './GlobalFilter'
-import ColumnFilter from './ColumnFilter'
-import TableHeader from './TableHeader'
-import TableBodyStatus from './TableBodyStatus'
-import Title from '../styled/singleElements/Title'
-import TableWrapper from '../styled/wrappers/TableWrapper'
-import HeaderWrapper from '../styled/wrappers/HeaderWrapper'
-import Table from '../styled/tableItems/Table'
-import TableBody from '../styled/tableItems/TableBody'
+import CustomTable from '../components/CustomTable'
 
-export const CustomTable = ({ title, columns, data, initialLimit = 3, filtering = 'both', options = [1, 2, 3, 5] }) => {
+export const CustomTableContainer = ({ title, columns, data, initialLimit = 3, filtering = 'bothFilters', options = [1, 2, 3, 5] }) => {
   const [applySorting, sorting, sortByColumn] = useSort(data)
   const [filterPhrase, setFilterPhrase, filterByPhrase] = useGlobalFilter(data)
   const [setColFilterPhrases, colFilterPhrases, filterByColumnsPhrase] = useColumnsFilter(columns, data)
@@ -33,7 +22,7 @@ export const CustomTable = ({ title, columns, data, initialLimit = 3, filtering 
     let globalFilteredData = []
     let columnsFilteredData = []
     switch (filtering) {
-      case 'both':
+      case 'bothFilters':
         globalFilteredData = filterByColumnsPhrase(sortedData)
         columnsFilteredData = filterByPhrase(globalFilteredData)
         return setProcessedData(columnsFilteredData)
@@ -48,11 +37,12 @@ export const CustomTable = ({ title, columns, data, initialLimit = 3, filtering 
         columnsFilteredData = filterByPhrase(globalFilteredData)
         return setProcessedData(columnsFilteredData)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sorting, filterPhrase, colFilterPhrases])
 
   const handleSortChange = (field, type) => {
-    applySorting(field, type)
     setPage(1)
+    applySorting(field, type)
   }
 
   const handleGlobalFilterChange = (e, clear) => {
@@ -62,42 +52,27 @@ export const CustomTable = ({ title, columns, data, initialLimit = 3, filtering 
   }
 
   const handleColFilterChange = (e, field) => {
-    setColFilterPhrases((prevColFilters) => { return { ...prevColFilters, [field]: e.target.value } })
     setPage(1)
+    setColFilterPhrases((prevColFilters) => { return { ...prevColFilters, [field]: e.target.value } })
+  }
+
+  const handleRowsPerPageChange = (e) => {
+    setPage(1)
+    setLimit(e.target.value)
   }
 
   return (
-    <paginationContext.Provider value={{ page, setPage, limit, setLimit, begin, end }}>
+    <paginationContext.Provider value={{ page, setPage, limit, handleRowsPerPageChange, begin, end }}>
       <globalFilterContext.Provider value={{ filterPhrase, handleGlobalFilterChange }}>
         <columnFilterContext.Provider value={{ colFilterPhrases, handleColFilterChange }}>
           <sortContext.Provider value={{ sorting, handleSortChange }}>
-            <div style={{ padding: '2rem' }}>
-              <HeaderWrapper>
-                {(filtering === 'globalFilter' || filtering === 'both') && <GlobalFilter />}
-                <Title content={title} />
-              </HeaderWrapper>
-              <TableWrapper>
-                <Table>
-                  <TableHeader columns={columns} />
-                  <TableBody>
-                    {(filtering === 'columnFilter' || filtering === 'both') && <ColumnFilter columns={columns} />}
-                    {
-                      processedData.length !== 0 ?
-                        <TableBodyPage data={processedData} />
-                        :
-                        <TableBodyStatus
-                          content={'No matching data found'}
-                          maxLength={columns.length}
-                        />
-                    }
-                  </TableBody>
-                </Table>
-              </TableWrapper>
-              <Pagination
-                dataLength={processedData.length}
-                options={options}
-              />
-            </div>
+            <CustomTable
+              processedData={processedData}
+              columns={columns}
+              title={title}
+              filtering={filtering}
+              options={options}
+            />
           </sortContext.Provider>
         </columnFilterContext.Provider>
       </globalFilterContext.Provider>
@@ -105,7 +80,7 @@ export const CustomTable = ({ title, columns, data, initialLimit = 3, filtering 
   )
 }
 
-CustomTable.propTypes = {
+CustomTableContainer.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   title: PropTypes.string,
@@ -114,4 +89,4 @@ CustomTable.propTypes = {
   options: PropTypes.arrayOf(PropTypes.number)
 }
 
-export default CustomTable
+export default CustomTableContainer

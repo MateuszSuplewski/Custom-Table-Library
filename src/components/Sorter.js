@@ -9,6 +9,7 @@ const Sorter = ({ isActiveSort, order }) => {
       data-testid={order === 'DESC' ? 'sortIcon--dsc' : 'sortIcon--asc'}
       icon={order === 'DESC' && isActiveSort ? faSortDown : faSortUp}
       isActive={isActiveSort}
+      style={{ paddingLeft: '0.5rem' }}
     />
   )
 }
