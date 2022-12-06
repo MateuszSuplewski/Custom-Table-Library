@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Custom-Table-Library/static/css/main.2ae47eeb.chunk.css",
+    "main.js": "/Custom-Table-Library/static/js/main.b7f18f28.chunk.js",
+    "main.js.map": "/Custom-Table-Library/static/js/main.b7f18f28.chunk.js.map",
+    "runtime-main.js": "/Custom-Table-Library/static/js/runtime-main.6ef04b46.js",
+    "runtime-main.js.map": "/Custom-Table-Library/static/js/runtime-main.6ef04b46.js.map",
+    "static/js/2.4ca84673.chunk.js": "/Custom-Table-Library/static/js/2.4ca84673.chunk.js",
+    "static/js/2.4ca84673.chunk.js.map": "/Custom-Table-Library/static/js/2.4ca84673.chunk.js.map",
+    "static/js/3.3ba1d84a.chunk.js": "/Custom-Table-Library/static/js/3.3ba1d84a.chunk.js",
+    "static/js/3.3ba1d84a.chunk.js.map": "/Custom-Table-Library/static/js/3.3ba1d84a.chunk.js.map",
+    "index.html": "/Custom-Table-Library/index.html",
+    "static/css/main.2ae47eeb.chunk.css.map": "/Custom-Table-Library/static/css/main.2ae47eeb.chunk.css.map",
+    "static/js/2.4ca84673.chunk.js.LICENSE.txt": "/Custom-Table-Library/static/js/2.4ca84673.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6ef04b46.js",
+    "static/js/2.4ca84673.chunk.js",
+    "static/css/main.2ae47eeb.chunk.css",
+    "static/js/main.b7f18f28.chunk.js"
+  ]
+}
