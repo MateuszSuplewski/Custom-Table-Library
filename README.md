@@ -42,7 +42,7 @@ When creating the project, I was inspired by solutions such as: [material-table]
  
 ## 🔗 See also
 
-Are you interested in **React** and **Styled components**? See my other project -> [Neuromorphic Form](https://github.com/MateuszSuplewski/task-react-redux-basics).
+Are you interested in **React** and **Styled components**? See my other project -> [Neuromorphic Form](https://github.com/MateuszSuplewski/Neuromorphic-Multistep-Form).
 
 &nbsp;
  
